@@ -9,6 +9,22 @@
 //   }
 // }).catch(err => console.error("Failed to read clipboard: ", err));
 
+
+const copyBtn = document.getElementById("copyBtn")
+let linkList = ''
+
+copyBtn.addEventListener("click", function () {
+    chrome.tabs.query({}, function (tabs) {
+        console.log("Open Tabs:");
+        tabs.forEach(tab => {
+            console.log(tab);
+            console.log(tab.url);
+        });
+    });
+});
+
+
+
 async function copyLink() {
   let text = document.getElementById("linkText").value;
   let url = document.getElementById("linkURL").value;
@@ -19,14 +35,14 @@ async function copyLink() {
   }
 
   // Create HTML and Plain Text versions of the hyperlink
-  let rtf = `{\rtf1\ansi{\field{\*\fldinst{HYPERLINK "${url}"}}{\fldrslt ${text}}}}`;;
+  let htmlLink = `<a href="${url}">${text}</a>`;
   let plainText = `${text} (${url})`;
 
   try {
       // Use Clipboard API to copy HTML and Plain Text
       await navigator.clipboard.write([
           new ClipboardItem({
-              "text/rtf": new Blob([rtf], { type: "text/rtf" }),
+              "text/html": new Blob([htmlLink], { type: "text/html" }),
               "text/plain": new Blob([plainText], { type: "text/plain" })
           })
       ]);
@@ -37,5 +53,4 @@ async function copyLink() {
       document.getElementById("message").textContent = "Failed to copy. Try manually selecting and copying.";
   }
 }
-
-//<script src="index.js"></script>
+//
