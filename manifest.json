@@ -1,0 +1,10 @@
+{
+    "name": "Link Maker",
+    "description": "creates links containing URLs of every tab in the window",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+      "default_popup": "index.html",
+      "default_icon": "hello_extensions.png"
+    }
+  }

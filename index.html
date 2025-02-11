@@ -1,0 +1,60 @@
+<!-- <script src="/index.js"></script> -->
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy Hyperlink</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, button { margin: 5px 0; padding: 10px; width: 100%; }
+    </style>
+</head>
+<body>
+
+    <h2>Generate and Copy a Hyperlink</h2>
+
+    <label for="linkText">Link Text:</label>
+    <input type="text" id="linkText" placeholder="Enter link text" required>
+
+    <label for="linkURL">URL:</label>
+    <input type="url" id="linkURL" placeholder="Enter URL" required>
+
+    <button onclick="copyLink()">Copy Link</button>
+
+    <p id="message" style="color: green;"></p>
+
+    <script>
+        async function copyLink() {
+            let text = document.getElementById("linkText").value;
+            let url = document.getElementById("linkURL").value;
+            
+            if (!text || !url) {
+                alert("Please enter both text and URL.");
+                return;
+            }
+
+            // Create HTML and Plain Text versions of the hyperlink
+            let htmlLink = `<a href="${url}">${text}</a>`;
+            let plainText = `${text} (${url})`;
+
+            try {
+                // Use Clipboard API to copy HTML and Plain Text
+                await navigator.clipboard.write([
+                    new ClipboardItem({
+                        "text/html": new Blob([htmlLink], { type: "text/html" }),
+                        "text/plain": new Blob([plainText], { type: "text/plain" })
+                    })
+                ]);
+                
+                document.getElementById("message").textContent = "Link copied successfully!";
+            } catch (err) {
+                console.error("Failed to copy:", err);
+                document.getElementById("message").textContent = "Failed to copy. Try manually selecting and copying.";
+            }
+        }
+    </script>
+
+</body>
+</html>
