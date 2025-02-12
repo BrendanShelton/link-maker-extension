@@ -34,8 +34,8 @@ async function copyLinks(urls, titles) {
         //if title and url exist
         if (title && url) {
             //add each URL and title to link contents
-            htmlContent += `<a href="${url}">${title}</a><br>`;
-            plainTextContent += `${title} (${url})\n`;
+            htmlContent += `<a href="${url}">${title}</a><br><br>`;
+            plainTextContent += `${title} (${url})\n\n`;
         }
     }
 
